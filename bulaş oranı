@@ -1,0 +1,58 @@
+import networkx as nx
+import matplotlib.pyplot as plt
+import random
+
+
+
+def distribution_graph(g):
+	print(nx.degree(g))
+	all_node_degree = list(dict((nx.degree(g))).values())
+
+	unique_degree = list(set(all_node_degree))
+	unique_degree.sort()
+	nodes_with_degree = []
+	for i in unique_degree:
+		nodes_with_degree.append(all_node_degree.count(i))
+
+	plt.plot(unique_degree, nodes_with_degree)
+	plt.xlabel("Degrees")
+	plt.ylabel("No. of nodes")
+	plt.title("Degree distribution")
+	plt.show()
+
+
+print("Düğüm sayısını girin")
+N = int(input())
+
+
+print("Bulaş oranını girin")
+P = float(input())
+
+
+
+g = nx.Graph()
+
+
+
+g.add_nodes_from(range(1, N + 1))
+
+
+
+for i in g.nodes():
+	for j in g.nodes():
+		if (i < j):
+			
+			
+			R = random.random()
+			
+			
+			if (R < P):
+				g.add_edge(i, j)
+	pos = nx.circular_layout(g)
+	
+	
+	nx.draw(g, pos, with_labels=1)
+	plt.show()
+
+	
+distribution_graph(g)
